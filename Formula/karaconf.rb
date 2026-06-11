@@ -15,10 +15,16 @@ class Karaconf < Formula
   end
 
   depends_on :macos
-  depends_on cask: "karabiner-elements"
 
   def install
     bin.install "karaconf"
+  end
+
+  def caveats
+    <<~EOS
+      karaconf needs Karabiner-Elements:
+        brew install --cask karabiner-elements
+    EOS
   end
 
   test do
