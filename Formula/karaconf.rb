@@ -1,18 +1,27 @@
 class Karaconf < Formula
-    desc "Karabiner config manager"
-    homepage "https://github.com/vgalanti/karaconf"
-    url "https://github.com/vgalanti/karaconf/archive/refs/tags/v0.1.0.tar.gz"
-    sha256 "5a306be4ceb6b67dc7b713cc0324a3cec2105f6158fd1210dd160e405ce57671  -"
-    license "MIT"
-    head "https://github.com/vgalanti/karaconf.git", branch: "main"
+  desc "Karabiner config manager"
+  homepage "https://github.com/vgalanti/karaconf"
+  version "0.1.2"
+  license "MIT"
 
-    depends_on "rust" => :build
-
-    def install
-      system "cargo", "install", *std_cargo_args
-    end
-
-    test do
-      assert_match "karaconf", shell_output("#{bin}/karaconf --help")
-    end
+  on_arm do
+    url "https://github.com/vgalanti/karaconf/releases/download/v0.1.2/karaconf-aarch64-apple-darwin.tar.gz"
+    sha256 "831ed7ae2f0cced4243ecc5cc790d6609c69a40c5305d939da07d93cf3db416f"
   end
+
+  on_intel do
+    url "https://github.com/vgalanti/karaconf/releases/download/v0.1.2/karaconf-x86_64-apple-darwin.tar.gz"
+    sha256 "0ed997a1abd2a37a4303619f8fc9448764e4bfb0d6cf5db42865e2a17ab64c45"
+  end
+
+  depends_on :macos
+  depends_on cask: "karabiner-elements"
+
+  def install
+    bin.install "karaconf"
+  end
+
+  test do
+    assert_match "karaconf", shell_output("#{bin}/karaconf --help")
+  end
+end
